@@ -664,7 +664,18 @@ class ParticleFilter(InferenceModule):
         """
         self.particles = []
         "*** YOUR CODE HERE ***"
-        raiseNotDefined()
+        # track how many particles have been placed so far
+        placed = 0
+        # keep adding particles until we reach the required amount
+        while placed < self.numParticles:
+            # cycle through all legal positions evenly
+            for pos in self.legalPositions:
+                # only add if we still need more particles
+                if placed < self.numParticles:
+                    self.particles.append(pos)
+                    placed += 1
+                else:
+                    break
         "*** END YOUR CODE HERE ***"
 
     def getBeliefDistribution(self):
@@ -676,7 +687,14 @@ class ParticleFilter(InferenceModule):
         This function should return a normalized distribution.
         """
         "*** YOUR CODE HERE ***"
-        raiseNotDefined()
+        # counter to tally up how many particles are at each position
+        beliefDist = Counter()
+        # count occurrences of each position across all particles
+        for particle in self.particles:
+            beliefDist[particle] += 1
+        # normalize so values represent probabilities not raw counts
+        beliefDist.normalize()
+        return beliefDist
         "*** END YOUR CODE HERE ***"
     
     ########### ########### ###########
