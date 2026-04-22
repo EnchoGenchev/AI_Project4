@@ -6,7 +6,11 @@ Fabian Ochoa
 # Add your answer to  QS3.1 [optional] and QS7.1 [mandatory] in this file
 
 QS3.1 [option]:
+The unconditioned variables in the returned factor are the same 
+minus the elimination variable.
 
+The conditioned variables in the returned factor are the same as 
+the original factor.
 
 
 QS7.1: 
