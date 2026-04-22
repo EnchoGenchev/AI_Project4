@@ -14,3 +14,8 @@ the original factor.
 
 
 QS7.1: 
+Differences emerge starting at move 3 across all failing test cases. 
+Some squares get darker because they have more neighbors, meaning 
+probability from multiple positions flows into them each time step, 
+while squares with fewer neighbors like corners receive less incoming 
+probability and get lighter.

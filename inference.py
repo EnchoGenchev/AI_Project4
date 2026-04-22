@@ -20,7 +20,7 @@ import game
 import bayesNet as bn
 from bayesNet import normalize
 import hunters
-from util import manhattanDistance, raiseNotDefined
+from util import manhattanDistance, raiseNotDefined, Counter
 from factorOperations import joinFactorsByVariableWithCallTracking, joinFactors
 from factorOperations import eliminateWithCallTracking
 
@@ -616,7 +616,23 @@ class ExactInference(InferenceModule):
         current position is known.
         """
         "*** YOUR CODE HERE ***"
-        raiseNotDefined()
+        # new distribution to store updated beliefs
+        updatedBeliefs = Counter()
+
+        # go through every position the ghost could currently be at
+        # use allPositions so we include jail (1,1) not just legal positions
+        for oldPos in self.allPositions:
+            # get the distribution over where the ghost could move next
+            newPosDist = self.getPositionDistribution(gameState, oldPos)
+
+            # for each possible next position, weight it by how likely
+            # the ghost was at oldPos in the first place
+            for nextPos, prob in newPosDist.items():
+                updatedBeliefs[nextPos] += prob * self.beliefs[oldPos]
+
+        # normalize so probabilities sum to 1
+        updatedBeliefs.normalize()
+        self.beliefs = updatedBeliefs
         "*** END YOUR CODE HERE ***"
 
     def getBeliefDistribution(self):
